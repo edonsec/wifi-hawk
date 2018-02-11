@@ -1,0 +1,7 @@
+[wigle]
+name=YOUR_WIGLE_API_NAME
+token=YOUR_WIGLE_API_TOKEN
+
+[google]
+geocode_api_key=YOUR_GOOGLE_API_MAP_API_KEY_HERE
+javascript_api_key=YOUR_GOOGLE_MAPS_JAVASCRIPT_API_KEY_HERE

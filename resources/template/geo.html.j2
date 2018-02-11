@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Plotted Locations</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+    function initMap() {
+      var bounds = new google.maps.LatLngBounds();
+      var access_points = {{ access_points }};
+
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 7,
+      });
+
+      var infoWindow = new google.maps.InfoWindow({
+        content: ''
+      });
+
+      var mapUpdateInfo = function(content)
+      {
+        return function()
+        {
+          infoWindow.setContent(content)
+          infoWindow.open(map, this);
+        }
+      }
+
+      for (var i = 0; i < access_points.length; i++)
+      {
+        var content = '<strong>Access Point:</strong> ' + access_points[i]["ssid"] + '<br><strong>Approx Address:</strong> ' + access_points[i]["addr"];
+
+        var marker = new google.maps.Marker({
+          position: access_points[i]["location"],
+          map: map,
+          title: access_points[i]["ssid"]
+        });
+
+        bounds.extend(marker.position)
+        google.maps.event.addListener(marker, 'click', mapUpdateInfo(content));
+      }
+
+      map.fitBounds(bounds);
+    }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key={{ google_key }}&signed_in=true&callback=initMap"></script>
+  </body>
+</html>

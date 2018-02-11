@@ -1,0 +1,7 @@
+config.ini
+venv
+.wifihawk.ini
+dist
+WifiHawk.egg-info
+build
+.idea

@@ -1,0 +1,12 @@
+^TALKTALK
+^BtBusinessHub-
+^VM
+^virginmedia
+^EE-Brightbox
+^BtHomeHub
+^PlusnetWireless
+^SKY
+^BTHub
+^O2Wireless
+^PLUSNET-
+^TNCAP

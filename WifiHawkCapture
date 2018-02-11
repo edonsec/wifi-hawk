@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+
+import argparse
+from App.Capture import Capture
+
+
+def main():
+    argparser = argparse.ArgumentParser()
+    argparser.add_argument("--interface", "-i", help="Interface to sniff on")
+    argparser.add_argument("--pcap", "-p", help="Pcap file to sniff")
+    argparser.add_argument("--db", '-d', help="Database file", required=True)
+    args = argparser.parse_args()
+
+    Capture(args).run()
+
+
+if __name__ != 'main':
+    main()
