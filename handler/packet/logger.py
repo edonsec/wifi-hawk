@@ -2,10 +2,10 @@ import string
 from datetime import datetime
 from scapy.all import Dot11ProbeReq, Dot11ProbeResp, Dot11Beacon
 
-from Util import Oui
+from util import oui
 
 
-class LoggerPacketHandler():
+class Logger:
     def __init__(self, db):
         self.db = db
         self.cursor = db.cursor()
@@ -40,7 +40,7 @@ class LoggerPacketHandler():
 
         if self.no_entry(ssid, client) and self.is_valid(ssid):
             self.cursor.executemany('REPLACE INTO ssid_log VALUES (?, ?, ?, ?, ?)',
-                                    [(ssid, client, Oui.get_manufacturer(ssid), datetime.now(), 0)])
+                                    [(ssid, client, oui.get_manufacturer(ssid), datetime.now(), 0)])
             self.db.commit()
 
     def mark_proximity(self, pkt):
@@ -50,5 +50,6 @@ class LoggerPacketHandler():
                             (1, str(pkt.sprintf('%' + typename + '.info%'))))
         self.db.commit()
 
-    def is_valid(self, ssid):
+    @staticmethod
+    def is_valid(ssid):
         return all(c in string.printable for c in ssid)

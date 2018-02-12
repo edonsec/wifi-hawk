@@ -1,10 +1,10 @@
 from scapy.all import Dot11ProbeReq, Dot11ProbeResp, Dot11Beacon
 
 from chardet import detect
-from Util import Oui
+from util import oui
 
 
-class PrinterPacketHandler():
+class Printer:
     def __init__(self):
         self.probe_req = []
         self.probe_res = []
@@ -22,7 +22,7 @@ class PrinterPacketHandler():
         probe_req = pkt.sprintf('%Dot11ProbeReq.info%')
 
         if probe_req not in self.probe_req:
-            print "[Probe Req] Device: {} ({}); SSID: {}".format(pkt.addr2, Oui.get_manufacturer(pkt.addr2),
+            print "[Probe Req] Device: {} ({}); SSID: {}".format(pkt.addr2, oui.get_manufacturer(pkt.addr2),
                                                                  self.normalize(probe_req))
             self.probe_req.append(probe_req)
 
@@ -30,7 +30,7 @@ class PrinterPacketHandler():
         probe_res = pkt.sprintf('%Dot11ProbeResp.info%')
 
         if probe_res not in self.probe_res:
-            print "[Probe Resp] Device: {} ({}); SSID: {}".format(pkt.addr2, Oui.get_manufacturer(pkt.addr2),
+            print "[Probe Resp] Device: {} ({}); SSID: {}".format(pkt.addr2, oui.get_manufacturer(pkt.addr2),
                                                                   self.normalize(probe_res))
             self.probe_res.append(probe_res)
 
@@ -38,7 +38,7 @@ class PrinterPacketHandler():
         beacon = pkt.sprintf('%Dot11Beacon.info%')
 
         if beacon not in self.beacon:
-            print "[Beacon] Device: {} ({}); SSID: {}".format(pkt.addr2, Oui.get_manufacturer(pkt.addr2),
+            print "[Beacon] Device: {} ({}); SSID: {}".format(pkt.addr2, oui.get_manufacturer(pkt.addr2),
                                                               self.normalize(beacon))
             self.beacon.append(beacon)
 

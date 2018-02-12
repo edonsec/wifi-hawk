@@ -3,15 +3,15 @@ import ConfigParser
 import os
 import sqlite3
 
-from Agent.GoogleMap import GoogleMap, GoogleException
-from Agent.Wigle import Wigle, WigleException
-from Agent.Ssid import Ssid
-from Cache.Location import Location
-from Util import SqliteFactory
-from Util.Pattern import Pattern
-from Defaults import *
-from Config import Config
-from Util.Reporting import StdoutReporting
+from agent.google_map import GoogleMap
+from agent.ssid import Ssid
+from agent.wigle import WigleException, Wigle
+from cache.location import Location
+from util import sqlite_factory
+from util.pattern import Pattern
+from util.stdout_reporting import StdoutReporting
+from config.config import Config, GoogleConfig, WigleConfig
+from defaults import *
 
 
 class Plot:
@@ -23,7 +23,7 @@ class Plot:
     def __init__(self, args):
         self.args = args
         self.reporting = StdoutReporting(verbose=self.args.verbose, debug=self.args.debug)
-        self.app_config = Config.Config()
+        self.app_config = Config()
         self.whitelist = Pattern([])
         self.blacklist = Pattern([])
 
@@ -31,7 +31,7 @@ class Plot:
         self.ensure_db_exists()
 
         self.db = sqlite3.connect(self.args.db)
-        self.db.row_factory = SqliteFactory.dict_factory
+        self.db.row_factory = sqlite_factory.dict_factory
         self.cache = Location(self.db)
 
         self.setup_config()
@@ -112,9 +112,9 @@ class Plot:
         if os.path.exists(user_config_path) or os.path.exists(self.args.config):
             config.read([user_config_path, self.args.config])
 
-            google_config = Config.GoogleConfig(geocode_api_key=config.get("google", "geocode_api_key"),
-                                                javascript_api_key=config.get("google", "javascript_api_key"))
-            wigle_config = Config.WigleConfig(
+            google_config = GoogleConfig(geocode_api_key=config.get("google", "geocode_api_key"),
+                                         javascript_api_key=config.get("google", "javascript_api_key"))
+            wigle_config = WigleConfig(
                 name=config.get("wigle", "name"),
                 token=config.get("wigle", "token")
             )

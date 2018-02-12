@@ -1,3 +1,4 @@
+chardet==3.0.4
 scapy==2.3.2
 netaddr==0.7.18
 jinja2==2.7.3

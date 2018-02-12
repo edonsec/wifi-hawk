@@ -1,10 +1,10 @@
 import sqlite3
 
-from Handler.LoggerPacketHandler import LoggerPacketHandler
-from Handler.PrinterPacketHandler import PrinterPacketHandler
 from scapy.all import *
 
-from Packet.HandlerManager import HandlerManager
+from handler.manager import Manager
+from handler.packet.logger import Logger
+from handler.packet.printer import Printer
 
 
 class Capture:
@@ -12,10 +12,10 @@ class Capture:
         self.args = args
 
         db = sqlite3.connect(self.args.db)
-        printer_handler = PrinterPacketHandler()
-        logger_handler = LoggerPacketHandler(db)
+        printer_handler = Printer()
+        logger_handler = Logger(db)
 
-        self.packet_handler_manager = HandlerManager()
+        self.packet_handler_manager = Manager()
         self.packet_handler_manager.add(printer_handler)
         self.packet_handler_manager.add(logger_handler)
 

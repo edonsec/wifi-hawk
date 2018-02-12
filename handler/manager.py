@@ -1,4 +1,4 @@
-class HandlerManager:
+class Manager:
     def __init__(self):
         self.handlers = []
 
