@@ -10,7 +10,7 @@ class WigleException(Exception):
     pass
 
 
-class Wigle:
+class Wigle(object):
     API_ENDPOINT = "https://api.wigle.net/api/v2"
 
     def __init__(self, config, reporting, cache=None):

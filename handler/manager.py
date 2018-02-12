@@ -1,4 +1,4 @@
-class Manager:
+class Manager(object):
     def __init__(self):
         self.handlers = []
 
@@ -6,5 +6,5 @@ class Manager:
         self.handlers.append(packet_handler)
 
     def apply(self, pkt):
-        for h in self.handlers:
-            h.process(pkt)
+        for handler in self.handlers:
+            handler.process(pkt)

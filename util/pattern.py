@@ -1,26 +1,26 @@
 import re
 
 
-class Pattern:
+class Pattern(object):
     def __init__(self, patterns):
         self.last_match = None
         self.patterns = patterns
 
     def load_with_file(self, pattern_file):
-        with open(pattern_file) as f:
-            self.patterns = f.read().split('\n')
+        with open(pattern_file) as f_p:
+            self.patterns = f_p.read().split('\n')
 
     def matches(self, subject):
         for pattern in self.patterns:
-            if len(pattern) == 0:
+            if not pattern:
                 continue
 
             try:
-                p = re.compile(pattern)
-                if p.match(subject):
+                regexp = re.compile(pattern)
+                if regexp.match(subject):
                     self.last_match = pattern
                     return True
-            except:
+            except ValueError:
                 continue
 
         return False
@@ -30,4 +30,3 @@ class Pattern:
 
     def get_last_match(self):
         return self.last_match
-

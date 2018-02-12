@@ -4,7 +4,7 @@ from chardet import detect
 from util import oui
 
 
-class Printer:
+class Printer(object):
     def __init__(self):
         self.probe_req = []
         self.probe_res = []
@@ -22,7 +22,8 @@ class Printer:
         probe_req = pkt.sprintf('%Dot11ProbeReq.info%')
 
         if probe_req not in self.probe_req:
-            print "[Probe Req] Device: {} ({}); SSID: {}".format(pkt.addr2, oui.get_manufacturer(pkt.addr2),
+            print "[Probe Req] Device: {} ({}); SSID: {}".format(pkt.addr2,
+                                                                 oui.get_manufacturer(pkt.addr2),
                                                                  self.normalize(probe_req))
             self.probe_req.append(probe_req)
 
@@ -30,7 +31,8 @@ class Printer:
         probe_res = pkt.sprintf('%Dot11ProbeResp.info%')
 
         if probe_res not in self.probe_res:
-            print "[Probe Resp] Device: {} ({}); SSID: {}".format(pkt.addr2, oui.get_manufacturer(pkt.addr2),
+            print "[Probe Resp] Device: {} ({}); SSID: {}".format(pkt.addr2,
+                                                                  oui.get_manufacturer(pkt.addr2),
                                                                   self.normalize(probe_res))
             self.probe_res.append(probe_res)
 
@@ -38,7 +40,8 @@ class Printer:
         beacon = pkt.sprintf('%Dot11Beacon.info%')
 
         if beacon not in self.beacon:
-            print "[Beacon] Device: {} ({}); SSID: {}".format(pkt.addr2, oui.get_manufacturer(pkt.addr2),
+            print "[Beacon] Device: {} ({}); SSID: {}".format(pkt.addr2,
+                                                              oui.get_manufacturer(pkt.addr2),
                                                               self.normalize(beacon))
             self.beacon.append(beacon)
 
@@ -46,7 +49,4 @@ class Printer:
     def normalize(ssid):
         enc = detect(ssid)
 
-        if enc['encoding'] is not None:
-            return ssid.decode(enc['encoding'])
-        else:
-            return '<unknown encoding>'
+        return '<unknown encoding>' if not enc['encoding'] else ssid.decode(enc['encoding'])

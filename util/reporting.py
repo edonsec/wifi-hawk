@@ -1,4 +1,4 @@
-class Reporting:
+class Reporting(object):
     def __init__(self, verbose=False, debug=False):
         self.verbose_flag = verbose
         self.debug_flag = debug
@@ -11,5 +11,3 @@ class Reporting:
 
     def verbose(self, msg):
         pass
-
-

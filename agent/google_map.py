@@ -9,7 +9,7 @@ class GoogleException(Exception):
     pass
 
 
-class GoogleMap:
+class GoogleMap(object):
     def __init__(self, config, reporting, template_dir=None, template_name="geo.html.j2", jinja=None):
         self.config = config
         self.reporting = reporting

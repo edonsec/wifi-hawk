@@ -7,7 +7,7 @@ from handler.packet.logger import Logger
 from handler.packet.printer import Printer
 
 
-class Capture:
+class Capture(object):
     def __init__(self, args):
         self.args = args
 
@@ -19,7 +19,8 @@ class Capture:
         self.packet_handler_manager.add(printer_handler)
         self.packet_handler_manager.add(logger_handler)
 
-    def is_accepted_packet(self, p):
+    @staticmethod
+    def is_accepted_packet(p):
         return (p.haslayer(Dot11Beacon) or
                 ((p.haslayer(Dot11ProbeReq) and p.getlayer(Dot11ProbeReq).info))
                 or p.haslayer(Dot11ProbeResp))

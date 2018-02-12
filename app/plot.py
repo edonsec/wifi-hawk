@@ -14,7 +14,7 @@ from config.config import Config, GoogleConfig, WigleConfig
 from defaults import *
 
 
-class Plot:
+class Plot(object):
     db = None
     cache = None
     google_agent = None

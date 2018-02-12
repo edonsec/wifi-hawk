@@ -1,4 +1,4 @@
-class Location:
+class Location(object):
     def __init__(self, db):
         self.db = db
         self.cursor = db.cursor()

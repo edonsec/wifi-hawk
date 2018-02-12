@@ -1,4 +1,4 @@
-class Entry:
+class Entry(object):
     def __init__(self, ssid, location, addr, cache=False):
         self.ssid = ssid
         self.location = location

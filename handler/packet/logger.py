@@ -5,14 +5,15 @@ from scapy.all import Dot11ProbeReq, Dot11ProbeResp, Dot11Beacon
 from util import oui
 
 
-class Logger:
+class Logger(object):
     def __init__(self, db):
         self.db = db
         self.cursor = db.cursor()
 
         self.cursor.execute(
-            'CREATE TABLE IF NOT EXISTS ssid_log (ssid TEXT PRIMARY KEY, client TEXT, manufacturer TEXT, entry_date '
-            'DATETIME, '
+            'CREATE TABLE IF NOT EXISTS ssid_log (ssid TEXT PRIMARY KEY, '
+            'client TEXT, manufacturer TEXT, '
+            'entry_date DATETIME, '
             'proximity INT)')
 
     def process(self, pkt):
@@ -27,7 +28,8 @@ class Logger:
             print str(e)
 
     def no_entry(self, ssid, client):
-        q = self.cursor.execute('SELECT * FROM ssid_log WHERE ssid = ? and client = ?', (ssid, client))
+        q = self.cursor.execute('SELECT * FROM ssid_log WHERE ssid = ? and client = ?',
+                                (ssid, client))
         fetch = q.fetchall()
 
         return len(fetch) == 0

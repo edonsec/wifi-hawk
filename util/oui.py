@@ -5,5 +5,5 @@ def get_manufacturer(mac):
     try:
         eui = EUI(mac)
         return eui.oui.registration()['org']
-    except:
+    except Exception:
         return '<unknown>'

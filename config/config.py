@@ -1,4 +1,4 @@
-class GoogleConfig:
+class GoogleConfig(object):
     def __init__(self, geocode_api_key=None, javascript_api_key=None):
         self.geocode_api_key = geocode_api_key
         self.javascript_api_key = javascript_api_key
